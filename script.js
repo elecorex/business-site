@@ -1,4 +1,4 @@
-﻿const revealItems = document.querySelectorAll(
+const revealItems = document.querySelectorAll(
   ".section, .hero-grid, .contact-card, .footer"
 );
 
@@ -25,48 +25,27 @@ if (navButton) {
     const contact = document.querySelector("#contact");
     if (contact) {
       contact.scrollIntoView({ behavior: "smooth" });
+      return;
     }
+
+    window.location.href = "index.html#contact";
   });
 }
 
-const langButtons = document.querySelectorAll("[data-lang-switch]");
-const metaDesc = document.querySelector("#meta-desc");
-const titleEl = document.querySelector("title");
-const inputFields = document.querySelectorAll("[data-placeholder-en]");
+const scrollTopButton = document.querySelector(".scroll-top");
+if (scrollTopButton) {
+  const updateScrollTopVisibility = () => {
+    if (window.scrollY > 240) {
+      scrollTopButton.classList.add("show");
+    } else {
+      scrollTopButton.classList.remove("show");
+    }
+  };
 
-const applyLanguage = (lang) => {
-  const safeLang = lang === "zh" ? "zh" : "en";
-  document.body.classList.remove("lang-en", "lang-zh");
-  document.body.classList.add(`lang-${safeLang}`);
-  document.documentElement.setAttribute("lang", safeLang === "zh" ? "zh-CN" : "en");
+  updateScrollTopVisibility();
+  window.addEventListener("scroll", updateScrollTopVisibility);
 
-  langButtons.forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.langSwitch === safeLang);
+  scrollTopButton.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
-
-  if (metaDesc) {
-    const desc = metaDesc.dataset[`desc${safeLang === "zh" ? "Zh" : "En"}`];
-    if (desc) metaDesc.setAttribute("content", desc);
-  }
-
-  if (titleEl) {
-    const title = titleEl.dataset[`title${safeLang === "zh" ? "Zh" : "En"}`];
-    if (title) titleEl.textContent = title;
-  }
-
-  inputFields.forEach((field) => {
-    const placeholder = field.dataset[`placeholder${safeLang === "zh" ? "Zh" : "En"}`];
-    if (placeholder) field.setAttribute("placeholder", placeholder);
-  });
-
-  localStorage.setItem("elecorex-lang", safeLang);
-};
-
-langButtons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    applyLanguage(btn.dataset.langSwitch);
-  });
-});
-
-const savedLang = localStorage.getItem("elecorex-lang");
-applyLanguage(savedLang || "en");
+}

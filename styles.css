@@ -328,6 +328,7 @@ body {
 .primary {
   background: var(--accent);
   color: #fff;
+  font-size: 20px;
 }
 
 .ghost {
@@ -341,6 +342,10 @@ body {
 .chip-footer button:hover {
   transform: translateY(-2px);
   box-shadow: 0 16px 30px rgba(26, 26, 26, 0.18);
+}
+.primary:hover{
+  color:#2f6fb3;
+  background-color: #e8eff7;
 }
 
 .hero-metrics {
